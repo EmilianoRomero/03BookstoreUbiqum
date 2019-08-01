@@ -21,6 +21,30 @@ function fetchingDataFromOnLineJSON(url) {
             return response.json();
         })
         .then(function (data) {
+            
+            //Checking the information from the object
+            console.log("Console data" + " ", data)
+            console.log("Console data.books" + " ", data.books)
+            
+            //Defining my object to work with
+            let books = data.books
+            console.log("data.books = books" + " ", books);
+            
+            //Getting the keys for the element [0]
+            Object.keys(books[0]).forEach(item => {
+                console.log("console keys" + " ", item);
+            });
+
+            
+            
+
+
+
+
+
+
+
+
             /*console.log(data.results[0].members);
             let members = data.results[0].members;
             let statistics = dataStat.statistics;
