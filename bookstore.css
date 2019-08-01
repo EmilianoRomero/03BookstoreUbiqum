@@ -35,4 +35,21 @@ html {
     text-align: left;
   }
 
+  /*---GRID---*/
+
+  .bookshelf {
+    display: grid;
+  }
   
+  * {
+    box-sizing: border-box;
+  }
+
+  .selector {
+    grid-row: row-start / row-end;
+    grid-column: col-start / col-end;
+  }
+
+  .book {
+    column-width: 8.33%;
+  }
