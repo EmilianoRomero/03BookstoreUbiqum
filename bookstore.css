@@ -40,6 +40,14 @@ html {
   text-align: left;
 }
 
+.row {
+  max-width: 100%;
+  background-color:rgb(110, 199, 144);
+  padding: 15px;
+  margin-top: 15px;
+  margin-right: 15px;
+  margin-left: 15px;  
+}
 
 
 

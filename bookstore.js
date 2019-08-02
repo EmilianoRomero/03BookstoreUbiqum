@@ -55,6 +55,7 @@ function fetchingDataFromOnLineJSON(url) {
                 let booksL = books.length
                 var i
                 for (i = 0; i < booksL; i++) {
+                    let coverImg = books[i].cover;
                     var row = document.createElement("TR")
 
                     var td = document.createElement("TD")
