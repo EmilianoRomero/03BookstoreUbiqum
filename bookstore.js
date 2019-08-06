@@ -34,50 +34,51 @@ function fetchingDataFromOnLineJSON(url) {
                 console.log("Console object's keys" + " ", item);
             });
 
-            //2.Creating table dynamically
-
-            function getCoverImageFromLink(books) {
-                let booksL = books.length
+            //1-d.Accessing the book covers as links
+            function getBookCoverLinkAndImage() {
                 var i
+                let booksL = books.length
                 for (i = 0; i < booksL; i++) {
                     let coverImg = books[i].cover;
-                    return coverImg;
+                    console.log(coverImg)
+                    let cover = document.createElement("IMG")
+                    cover.src = coverImg
+                    bookshelf.appendChild(cover)
                 }
-                console.log(coverImg)
             }
+            getBookCoverLinkAndImage(books)
 
-            var img = document.createElement("IMG");
-            img.src = getCoverImageFromLink(books);
-            bookshelf.appendChild(img);
-
-            function buildBookshelf(books, bookshelf) {
-                var tbody = document.getElementById(bookshelf)
-                let booksL = books.length
+            function getTitlesAndDescrptionsLinkAndContent() {
                 var i
+                let booksL = books.length
+                let titles = []
+                let descriptions = []
+                
+                let booksFrontAndBack = []
+
                 for (i = 0; i < booksL; i++) {
-                    let coverImg = books[i].cover;
-                    var row = document.createElement("TR")
 
-                    var td = document.createElement("TD")
-                    td.innerHTML = getCoverImageFromLink(books)
-                    row.appendChild(td)
+                    let bookFrontAndBack = {}
+                    let title = books[i].title;
+                    titles.push(title)
+                    
+                    let description = books[i].description;
+                    descriptions.push(description)
+                    
+                    bookFrontAndBack.title = books[i].title;
+                    
+                    bookFrontAndBack.description = books[i].description;
 
-                    tbody.appendChild(row)
+                    booksFrontAndBack.push(bookFrontAndBack)
+                    //let backInfo = document.createElement("IMG")
+                    //backInfo.src = (title, description)
+                    //bookshelfback.appendChild(title, description)
                 }
+                console.log(titles)
+                console.log(descriptions)
+                console.log(booksFrontAndBack)
             }
-            buildBookshelf(books, bookshelf);
-
-            //2.Assigning content to the grid
-            //2-a.Bookcovers
-            /*
-                        function insertBookcoverImg (id) {
-                            let coverImg = document.getElementById("book id").innerHTML
-                            coverImg.src = books[0].cover
-                            book.appendChild(coverImg);
-                            insertBookcoverImg (r1c1);
-                        }
-                            console.log(coverImg)
-            */
+            getTitlesAndDescrptionsLinkAndContent(books)
         })
 
         .catch(function (error) {
