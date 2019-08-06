@@ -34,51 +34,81 @@ function fetchingDataFromOnLineJSON(url) {
                 console.log("Console object's keys" + " ", item);
             });
 
-            //1-d.Accessing the book covers as links
+            //2-a.Getting book covers's links and their appended img; creating image in html, embeding img from src
+
             function getBookCoverLinkAndImage() {
                 var i
-                let booksL = books.length
+                var booksL = books.length
+                let frontContent = document.getElementById("bookshelf");
+
                 for (i = 0; i < booksL; i++) {
                     let coverImg = books[i].cover;
                     console.log(coverImg)
+
+                    let coverDiv = document.createElement("DIV")
+                    coverDiv.className = "everySingleBook"
+
                     let cover = document.createElement("IMG")
                     cover.src = coverImg
-                    bookshelf.appendChild(cover)
+                    coverDiv.appendChild(cover)
+
+                    frontContent.appendChild(coverDiv)
                 }
             }
             getBookCoverLinkAndImage(books)
 
+
             function getTitlesAndDescrptionsLinkAndContent() {
                 var i
-                let booksL = books.length
+                var booksL = books.length
                 let titles = []
                 let descriptions = []
-                
-                let booksFrontAndBack = []
+                let booksBackCovers = []
+                let backContent = document.getElementById("bookshelfback");
 
                 for (i = 0; i < booksL; i++) {
 
-                    let bookFrontAndBack = {}
+                    let bookTitlesAndDescriptions = {}
                     let title = books[i].title;
-                    titles.push(title)
-                    
-                    let description = books[i].description;
-                    descriptions.push(description)
-                    
-                    bookFrontAndBack.title = books[i].title;
-                    
-                    bookFrontAndBack.description = books[i].description;
+                    titles.push(title);
 
-                    booksFrontAndBack.push(bookFrontAndBack)
-                    //let backInfo = document.createElement("IMG")
-                    //backInfo.src = (title, description)
-                    //bookshelfback.appendChild(title, description)
+                    let description = books[i].description;
+                    descriptions.push(description);
+
+                    bookTitlesAndDescriptions.title = books[i].title;
+
+                    bookTitlesAndDescriptions.description = books[i].description;
+
+                    booksBackCovers.push(bookTitlesAndDescriptions);
+
+                    let backCoverDiv = document.createElement("DIV");
+                    backCoverDiv.className = "everySingleBack";
+
+                    let backCover = document.createElement("P");
+                    backCover.innerHTML = bookTitlesAndDescriptions.title + "." + " " + bookTitlesAndDescriptions.description;
+                    backCoverDiv.appendChild(backCover);
+
+                    let btn = document.createElement("BUTTON");
+                    btn.className = "btn btn-info";
+                    btn.innerHTML = "MORE INFO";
+                    backCoverDiv.appendChild(btn);
+
+                    backContent.appendChild(backCoverDiv)
                 }
                 console.log(titles)
                 console.log(descriptions)
-                console.log(booksFrontAndBack)
+                console.log(booksBackCovers)
             }
             getTitlesAndDescrptionsLinkAndContent(books)
+
+            function createSearchInput() {
+                let searchInput = document.getElementById("searchinput");
+                let searchBox = document.createElement("INPUT");
+                searchBox.setAttribute("type", "search");
+                searchInput.appendChild(searchBox);
+            }
+            createSearchInput();
+
         })
 
         .catch(function (error) {
