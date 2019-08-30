@@ -36,40 +36,51 @@ function fetchingDataFromOnLineJSON(url) {
 
             //2-a.Getting book covers's links and their appended img; creating image in html, embeding img from src
 
-            function getBookCoverLinkAndImage() {
+            function fillTheBookshelf() {
                 var i
                 var booksL = books.length
-                let frontContent = document.getElementById("cover");
+
+                //THE BOOKSHELF
+                let theBookshelf = document.getElementById("theBookshelf");
 
                 for (i = 0; i < booksL; i++) {
                     let coverImg = books[i].cover;
                     console.log(coverImg);
 
-                    let booksFront = document.createElement("DIV");
-                    booksFront.className = "everySingleFront";
+                    //THE BOOKCONTAINER
+                    let theBookContainer = document.createElement("DIV");
+                    theBookContainer.className = "theBookContainer";
+                    theBookContainer.id = "theBookContainer";    
 
+                    //THE BOOK
+                    let theBook = document.createElement("DIV");
+                    theBook.className = "theBook";
+                    theBook.id = "everySingleBook"
+
+                    //THE FRONT
+                    let theFront = document.createElement("DIV");
+                    theFront.className = "theFront";
+                    theFront.id = "everySingleFront";
+
+                    //THE BACK
+                    let titles = []
+                    let descriptions = []
+                    let booksBackCovers = []
+                    let theBack = document.createElement("DIV");
+                    theBack.className = "theBack";
+                    theBack.id = "everySingleBack";
+
+                    //COVERS'S CONTENT
                     let booksCover = document.createElement("IMG");
-                    booksCover.className = "classFrontContent";
+                    booksCover.className = "front";
+                    booksCover.id = "cover"
                     booksCover.src = coverImg;
-                    booksFront.appendChild(booksCover);
+                    theFront.appendChild(booksCover);
+                    theBook.appendChild(theFront);
 
-                    frontContent.appendChild(booksFront);
-                }
-            }
-            getBookCoverLinkAndImage(books)
-
-
-            function getTitlesAndDescrptionsLinkAndContent() {
-                var i
-                var booksL = books.length
-                let titles = []
-                let descriptions = []
-                let booksBackCovers = []
-                let backContent = document.getElementById("backcover");
-
-                for (i = 0; i < booksL; i++) {
-
+                    //BACKCOVERS'S CONTENT
                     let bookTitlesAndDescriptions = {}
+
                     let title = books[i].title;
                     titles.push(title);
 
@@ -82,145 +93,92 @@ function fetchingDataFromOnLineJSON(url) {
 
                     booksBackCovers.push(bookTitlesAndDescriptions);
 
-                    let backCoverDiv = document.createElement("DIV");
-                    backCoverDiv.className = "everySingleBack";
-
-                    let backCoverTitle = document.createElement("H1");
-                    backCoverTitle.className = "classBackContent";
+                    //TITLE
+                    let backCoverTitle = document.createElement("H2");
+                    backCoverTitle.className = "back";
                     backCoverTitle.id = "title";
                     backCoverTitle.innerHTML = bookTitlesAndDescriptions.title;
-                    backCoverDiv.appendChild(backCoverTitle);
+                    theBack.appendChild(backCoverTitle);
 
+                    //DESCRIPTION
                     let backCoverDescription = document.createElement("P");
-                    backCoverDescription.className = "classBackContent";
+                    backCoverDescription.className = "back";
                     backCoverDescription.id = "description";
-                    backCoverDescription.innerHTML = bookTitlesAndDescriptions.description;                    
-                    backCoverDiv.appendChild(backCoverDescription);
-                    
-                    let buttonDiv = document.createElement("DIV");
-                    buttonDiv.id = "buttonDivId";
-                    let btn = document.createElement("BUTTON");
-                    btn.className = "bt btn-default btn-sm";
-                    btn.id = "moreInfo";
-                    btn.innerHTML = "+ INFO";
-                    buttonDiv.appendChild(btn);
-                    backCoverDiv.appendChild(buttonDiv);
+                    backCoverDescription.innerHTML = bookTitlesAndDescriptions.description;
+                    theBack.appendChild(backCoverDescription);
 
-                    backContent.appendChild(backCoverDiv)
+                    theBook.appendChild(theBack);
+
+                    //COVER (FRONT) AND BACKCOVER (BACK)
+                    theBookContainer.appendChild(theBook);
+                    theBookshelf.appendChild(theBookContainer);
+
+                    //BUTTON MORE INFO
+                    let moreInfo = document.createElement("DIV");
+                    moreInfo.id = "moreInfo";
+                    let buttonMoreInfo = document.createElement("BUTTON");
+                    buttonMoreInfo.className = "buttonMoreInfo";
+                    buttonMoreInfo.id = "buttonMoreInfo";
+                    buttonMoreInfo.innerHTML = "+ info";
+                    moreInfo.appendChild(buttonMoreInfo);
+                    theBack.appendChild(moreInfo);
+
+                    //MODAL CONTENT FROM API WITH MORE INFO
+                    let booksMoreInfo = books[i].detail;
+                    
+                    //MODAL
+                    let theModal = document.createElement("DIV");
+                    theModal.className = "theModal";
+                    theModal.id = "theModal";
+                    theBookshelf.appendChild(theModal);
+
+                    //CREATE ELEMENT MODAL IMAGE
+                    let imgModal = document.createElement("IMG");
+                    imgModal.className = "imgModal";
+                    imgModal.src = booksMoreInfo;
+                    theModal.appendChild(imgModal);
+
+                    //BUTTON CLOSE MORE INFO
+                    let closeModal = document.createElement("BUTTON");
+                    closeModal.className = "closeModal";
+                    closeModal.id = "closeModal";
+                    closeModal.innerHTML = "close";
+                    theModal.appendChild(closeModal);
+
+                    //FUNCTION DISPLAY - CLOSE MODAL
+                    buttonMoreInfo.onclick = function () {
+                        theModal.style.display = "flex";
+                    }
+
+                    closeModal.onclick = function () {
+                        theModal.style.display = "none";
+                    }
                 }
-                console.log(titles)
-                console.log(descriptions)
-                console.log(booksBackCovers)
             }
-            getTitlesAndDescrptionsLinkAndContent(books)            
+            fillTheBookshelf(books)
+
 
             function createSearchInput() {
-                let searchInput = document.getElementById("searchinput");
+                let searchInputDiv = document.createElement("DIV");
+                searchInputDiv.className = "searchInputDiv";
+
                 let searchBox = document.createElement("INPUT");
+                searchBox.id = "searchBox";
+                searchBox.name = "searchBox";
+
                 searchBox.setAttribute("type", "search");
-                searchInput.appendChild(searchBox);
+
+                searchInputDiv.appendChild(searchBox);
+                banner.appendChild(searchInputDiv);
+
+                let submitDiv = document.createElement("DIV");
+                submitDiv.className = "submitDiv";
+
+                let submitBtn = document.createElement("INPUT");
+                submitBtn.id = "submitMySearch";
             }
+
             createSearchInput();
-
-            /* FUNCTIONS FOR THE INPUT SEARCH BOX */
-            function autocomplete(inp, arr) {
-                /*the autocomplete function takes two arguments,
-                the text field element and an array of possible autocompleted values:*/
-                var currentFocus;
-                /*execute a function when someone writes in the text field:*/
-                inp.addEventListener("input", function(e) {
-                    var a, b, i, val = this.value;
-                    /*close any already open lists of autocompleted values*/
-                    closeAllLists();
-                    if (!val) { return false;}
-                    currentFocus = -1;
-                    /*create a DIV element that will contain the items (values):*/
-                    a = document.createElement("DIV");
-                    a.setAttribute("id", this.id + "autocomplete-list");
-                    a.setAttribute("class", "autocomplete-items");
-                    /*append the DIV element as a child of the autocomplete container:*/
-                    this.parentNode.appendChild(a);
-                    /*for each item in the array...*/
-                    for (i = 0; i < arr.length; i++) {
-                      /*check if the item starts with the same letters as the text field value:*/
-                      if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                        /*create a DIV element for each matching element:*/
-                        b = document.createElement("DIV");
-                        /*make the matching letters bold:*/
-                        b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
-                        b.innerHTML += arr[i].substr(val.length);
-                        /*insert a input field that will hold the current array item's value:*/
-                        b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                        /*execute a function when someone clicks on the item value (DIV element):*/
-                        b.addEventListener("click", function(e) {
-                            /*insert the value for the autocomplete text field:*/
-                            inp.value = this.getElementsByTagName("input")[0].value;
-                            /*close the list of autocompleted values,
-                            (or any other open lists of autocompleted values:*/
-                            closeAllLists();
-                        });
-                        a.appendChild(b);
-                      }
-                    }
-                });
-                /*execute a function presses a key on the keyboard:*/
-                inp.addEventListener("keydown", function(e) {
-                    var x = document.getElementById(this.id + "autocomplete-list");
-                    if (x) x = x.getElementsByTagName("div");
-                    if (e.keyCode == 40) {
-                      /*If the arrow DOWN key is pressed,
-                      increase the currentFocus variable:*/
-                      currentFocus++;
-                      /*and and make the current item more visible:*/
-                      addActive(x);
-                    } else if (e.keyCode == 38) { //up
-                      /*If the arrow UP key is pressed,
-                      decrease the currentFocus variable:*/
-                      currentFocus--;
-                      /*and and make the current item more visible:*/
-                      addActive(x);
-                    } else if (e.keyCode == 13) {
-                      /*If the ENTER key is pressed, prevent the form from being submitted,*/
-                      e.preventDefault();
-                      if (currentFocus > -1) {
-                        /*and simulate a click on the "active" item:*/
-                        if (x) x[currentFocus].click();
-                      }
-                    }
-                });
-                function addActive(x) {
-                  /*a function to classify an item as "active":*/
-                  if (!x) return false;
-                  /*start by removing the "active" class on all items:*/
-                  removeActive(x);
-                  if (currentFocus >= x.length) currentFocus = 0;
-                  if (currentFocus < 0) currentFocus = (x.length - 1);
-                  /*add class "autocomplete-active":*/
-                  x[currentFocus].classList.add("autocomplete-active");
-                }
-                function removeActive(x) {
-                  /*a function to remove the "active" class from all autocomplete items:*/
-                  for (var i = 0; i < x.length; i++) {
-                    x[i].classList.remove("autocomplete-active");
-                  }
-                }
-                function closeAllLists(elmnt) {
-                  /*close all autocomplete lists in the document,
-                  except the one passed as an argument:*/
-                  var x = document.getElementsByClassName("autocomplete-items");
-                  for (var i = 0; i < x.length; i++) {
-                    if (elmnt != x[i] && elmnt != inp) {
-                      x[i].parentNode.removeChild(x[i]);
-                    }
-                  }
-                }
-                /*execute a function when someone clicks in the document:*/
-                document.addEventListener("click", function (e) {
-                    closeAllLists(e.target);
-                });
-              }
-
-
         })
 
         .catch(function (error) {
