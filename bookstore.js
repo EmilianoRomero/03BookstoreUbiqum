@@ -50,7 +50,7 @@ function fetchingDataFromOnLineJSON(url) {
                     //THE BOOKCONTAINER
                     let theBookContainer = document.createElement("DIV");
                     theBookContainer.className = "theBookContainer";
-                    theBookContainer.id = "theBookContainer";    
+                    theBookContainer.id = "theBookContainer";
 
                     //THE BOOK
                     let theBook = document.createElement("DIV");
@@ -125,7 +125,7 @@ function fetchingDataFromOnLineJSON(url) {
 
                     //MODAL CONTENT FROM API WITH MORE INFO
                     let booksMoreInfo = books[i].detail;
-                    
+
                     //MODAL
                     let theModal = document.createElement("DIV");
                     theModal.className = "theModal";
@@ -162,23 +162,70 @@ function fetchingDataFromOnLineJSON(url) {
                 let searchInputDiv = document.createElement("DIV");
                 searchInputDiv.className = "searchInputDiv";
 
+                //CREATING THE SEARCH FIELD AND DEFINING TYPE OF INPUT
                 let searchBox = document.createElement("INPUT");
                 searchBox.id = "searchBox";
                 searchBox.name = "searchBox";
-
                 searchBox.setAttribute("type", "search");
-
                 searchInputDiv.appendChild(searchBox);
                 banner.appendChild(searchInputDiv);
 
-                let submitDiv = document.createElement("DIV");
-                submitDiv.className = "submitDiv";
+                let imgSearch = document.createElement("IMG");
+                imgSearch.className = "imgSearch";
+                imgSearch.id = "imgSearch";
+                imgSearch.src = "magnifying-glass-search.svg";
+                searchInputDiv.appendChild(imgSearch);
 
-                let submitBtn = document.createElement("INPUT");
-                submitBtn.id = "submitMySearch";
+                let searchTip = document.createElement("P");
+                searchTip.className = "searchTip";
+                searchTip.id = "searchTip";
+                searchInputDiv.appendChild(searchTip);
+                
+                document.getElementById("searchTip").innerHTML = "Hit enter to search"
+                document.getElementById("searchBox").placeholder = "";
+
+                //SEARCH FIELD
+                let searchBtn = document.getElementById("imgSearch");
+                let search = document.getElementById("searchBox");
+                let tip = document.getElementById("searchTip");
+                //---
+                
+
+                var i = 0;
+                var message = "Type your search here";
+                var speed = 100;
+
+                searchBtn.addEventListener("click", () => {
+                    search.style.width = "18%";
+                    search.style.paddingLeft = "60px";
+                    search.style.cursor = "text";
+                    search.focus();
+                    typeWriter();
+                })
+
+                function typeWriter() {
+                    if (i < message.length) {
+                        msg = search.getAttribute("placeholder") + message.charAt(i);
+                        search.setAttribute("placeholder", msg);
+                        i++;
+                        setTimeout(typeWriter, speed);
+                    } 
+                }
+                search.addEventListener("keydown", () => {
+                    tip.style.visibility = "visible";
+                    tip.style.opacity = "1";
+                })
+
+                
             }
-
             createSearchInput();
+
+            //SEARCH THROUGH JSON AND FILTER
+
+
+
+
+
         })
 
         .catch(function (error) {
